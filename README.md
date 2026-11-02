@@ -70,20 +70,51 @@ Will Mirra draw this part?
 
 Keep the style simple enough for one person to finish.
 
+Put creature drawings in `art/taskies` and background drawings in `art/backgrounds`. The app reads copies from `src/assets` once a scene is using them.
+
 ### Facilitator control
 
 Hover a creature on the wall and press `M`. Each press advances its moss by one stage, then clears it. The control is unlabeled. Do not mention it to participants.
 
 ## Build
 
-Static HTML, CSS, and JavaScript. No server. Open the folder locally, or host it on GitHub Pages, for a link testers can use.
+Vite, React, and TypeScript. [Motion](https://motion.dev) (the `motion` package) handles grabbing a creature, opening the window, and the color shift on release. CSS handles the slow walk. Creature and moss art are SVG so the layers stack, and the name stays HTML on top of them. The wall and the landscape can be PNG. The task list is saved with `localStorage`. There is no server.
+
+GitHub Pages hosts the static build from this repo. Vercel can host the same `dist/` folder if a preview link is easier to send to participants. Hosting is not part of the app.
+
+A task stored in the browser has five fields and nothing else:
+
+- `id`
+- `name`
+- `color`: `0`, `1`, or `2`
+- `place`: `wall` or `outside`
+- `moss`: `0`, `1`, `2`, or `3`
 
 ```
-index.html      page, wall, window, plus, name field, outdoor latch
-styles.css      scene, motion, open window, color shift
-app.js          add, wander, drag, release, look outside, moss key, localStorage
-assets/         wall, window, landscape, creature, three colors, three moss stages
+index.html
+package.json
+tsconfig.json
+vite.config.ts          base: "/taskies/" for GitHub project pages
+public/
+art/
+  taskies/              original creature drawings
+  backgrounds/          wall, window, landscape
+src/
+  main.tsx              mounts the page
+  App.tsx               wall or outdoor view, owns the task list and the M key
+  types.ts              the five fields above
+  storage.ts            load and save the list
+  styles.css            wall, wander, window, outdoor scene
+  components/
+    Wall.tsx            stones, closed window, sill, plus, name field
+    Taskie.tsx          creature, name, moss layers, drag
+    Outdoor.tsx         landscape, freed creatures, latch back to the wall
+  assets/               creature, three colors, three moss stages, wall, window, landscape
 ```
+
+`npm install`, then `npm run dev`. `npm run build` writes the static page into `dist/`.
+
+Turn drag momentum off. A creature should stop where it is dropped, so a release near the glass does not slide past the window.
 
 Build in this order:
 
