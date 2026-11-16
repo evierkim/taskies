@@ -38,12 +38,12 @@ Across all interviews:
 
 ## Principles
 
-1. **The sill is the next action.** The newest creature stands at the window. The others wander the stones. Adding a task sets the new one on the sill and sends the previous one walking. When someone cannot find a place to start, the sill is that place.
-2. **Release is the reward.** Letting a creature out is the crossing-off feeling. The window opens, the creature turns bright, and it stays outside so finished work remains visible for a bit. That reward helps someone start. It is not a streak, a score, or the only reason to do the task.
-3. **A miss leaves the creature where it is.** Moss can appear. The creature can still be let out. On the way out, the moss clears and the bright color shows. Sitting with a task for a long time is allowed. The page keeps no record of how long, and it does not treat that wait as failure.
-4. **The wall stays short, calm, and open.** Unfinished creatures are soot-dark. They move slowly. The page is silent: no notifications, badges, or alarms. The wall holds a handful of creatures, short or medium length, never a long list. Three creatures is the scene the study uses. The page is meant to be left open.
-5. **The name stays readable.** Moss never covers the name. A forgotten task is still that task.
-6. **Naming is instant.** A short name puts the creature on the wall quickly. Date, duration, importance, effort, and category stay out of this first version, so the page stays less overwhelming. Dated work and detailed info stay in Google Calendar. Usability studies say that out loud.
+1. **The sill!** The newest creature stands at the window. The others wander the stones. Adding a task sets the new one on the sill and sends the previous one walking. When someone cannot find a place to start, the sill is that place.
+2. **releasing tasking is the reward system** Letting a creature out is the crossing-off feeling. The window opens, the creature turns bright, and it stays outside so finished work remains visible for a bit. That reward helps someone start. It is not a streak, a score, or the only reason to do the task.
+3. **A miss doesnt do anything** Moss can appear. The creature can still be let out. On the way out, the moss clears and the bright color shows. Sitting with a task for a long time is allowed. The page keeps no record of how long, and it does not treat that wait as failure.
+4. **wall is always calm/open** Unfinished creatures are soot-dark. They move slowly. The page is silent: no notifications, badges, or alarms. The wall holds a handful of creatures, short or medium length, never a long list. Three creatures is the scene the study uses. The page is meant to be left open.
+5. **name always readable** Moss never covers the name. A forgotten task is still that task.
+6. **naming is easy** A short name puts the creature on the wall quickly. Date, duration, importance, effort, and category stay out of this first version, so the page stays less overwhelming. Dated work and detailed info stay in Google Calendar. Usability studies say that out loud.
 
 ## The scene
 
