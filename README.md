@@ -90,6 +90,16 @@ Store the session in `localStorage` so a refresh keeps the same creatures, inclu
 
 Stand-in shapes are fine while the scene is being built. The usability sessions need the real drawings, because the moss question is about how the drawing feels.
 
+**The main risk:** B, C and D all edit Taskie.tsx, so you'd get merge conflicts. To avoid that:
+
+- Make Taskie.tsx a thin shell. Give each concern its own child or wrapper, such as <Moss /> and a wander wrapper.
+- Use small PRs and pull from main often.
+- Use stand-in shapes, so nobody waits on Mirra's art
+  - Still need:
+    -  'outside' bg (for freed taskies) 
+    - one more color for finished taskie
+    - 3 moss overlays
+
 ### Art
 
 TODO: Mirra upload her drawings to this repo.
