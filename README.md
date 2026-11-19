@@ -123,7 +123,7 @@ Hover a creature on the wall and press `M`. Each press advances its moss by one 
 
 Vite, React, and TypeScript. [Motion](https://motion.dev) (the `motion` package) handles grabbing a creature, opening the window, and the color shift on release. CSS handles the slow walk. Creature and moss art are SVG so the layers stack, and the name stays HTML on top of them. The wall and the landscape can be PNG. The task list is saved with `localStorage`. There is no server.
 
-GitHub Pages hosts the static build from this repo. Vercel can host the same `dist/` folder if a preview link is easier to send to participants. Hosting is not part of the app.
+The prototype runs locally only. It is not deployed anywhere.
 
 A task stored in the browser has five fields and nothing else:
 
@@ -137,7 +137,7 @@ A task stored in the browser has five fields and nothing else:
 index.html
 package.json
 tsconfig.json
-vite.config.ts          base: "/taskies/" for GitHub project pages
+vite.config.ts
 public/
 art/
   taskies/              original creature drawings
@@ -155,7 +155,7 @@ src/
   assets/               creature, three colors, three moss stages, wall, window, landscape
 ```
 
-`npm install`, then `npm run dev`. `npm run build` writes the static page into `dist/`.
+`npm install`, then `npm run dev` and open http://localhost:5173. `npm run build` type-checks and writes a static build into `dist/`.
 
 Turn drag momentum off. A creature should stop where it is dropped, so a release near the glass does not slide past the window.
 
