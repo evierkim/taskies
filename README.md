@@ -38,7 +38,7 @@ Across all interviews:
 
 ## Principles
 
-1. **The sill!** The newest creature stands at the window. The others wander the stones. Adding a task sets the new one on the sill and sends the previous one walking. When someone cannot find a place to start, the sill is that place.
+1. **Random picker** There will be a button that randomly picks a taskie. When someone cannot find a place to start, they can use the randomizer to do so.
 2. **releasing tasking is the reward system** Letting a creature out is the crossing-off feeling. The window opens, the creature turns bright, and it stays outside so finished work remains visible for a bit. That reward helps someone start. It is not a streak, a score, or the only reason to do the task.
 3. **A miss doesnt do anything** Moss can appear. The creature can still be let out. On the way out, the moss clears and the bright color shows. Sitting with a task for a long time is allowed. The page keeps no record of how long, and it does not treat that wait as failure.
 4. **wall is always calm/open** Unfinished creatures are soot-dark. They move slowly. The page is silent: no notifications, badges, or alarms. The wall holds a handful of creatures, short or medium length, never a long list. Three creatures is the scene the study uses. The page is meant to be left open.
@@ -62,7 +62,7 @@ Nothing else is on the page: no menu, counter, calendar, labels, or settings.
 3. On drop, the creature shifts from soot-dark to its color and steps through.
 4. The window closes. The wall is quiet again. The creature is gone from the stones and present outside.
 
-The color is assigned when the creature is created, cycling through three colors, and it is hidden until release. The person does not pick a color. Color only tells creatures apart.
+The color is assigned when the creature is created, cycling through two colors, and it is hidden until release. The person does not pick a color. Color only tells creatures apart.
 
 ### Moss
 
@@ -77,7 +77,7 @@ This table is the build plan for the presentation prototype. The repo is still a
 | Piece | Plan |
 | --- | --- |
 | Empty wall, window, sill, plus | In scope |
-| Type a name, creature appears on the sill | In scope |
+| Type a name, creature appears | In scope |
 | Slow wandering | In scope |
 | Drag to the window, color change, step outside | In scope |
 | Look outside, and come back to the wall | In scope |
@@ -149,7 +149,7 @@ src/
   storage.ts            load and save the list
   styles.css            wall, wander, window, outdoor scene
   components/
-    Wall.tsx            stones, closed window, sill, plus, name field
+    Wall.tsx            stones, closed window, plus, random picker button, name field
     Taskie.tsx          creature, name, moss layers, drag
     Outdoor.tsx         landscape, freed creatures, latch back to the wall
   assets/               creature, three colors, three moss stages, wall, window, landscape
