@@ -123,7 +123,6 @@ Hover a creature on the wall and press `M`. Each press advances its moss by one 
 
 - Ask participants to add long-term or easy-to-postpone tasks, not homework or dated work.
 - Say that dated work and detailed info stay in their Google Calendar.
-- Record whether they understand the release gesture without instruction.
 - Record whether the wall feels calm or empty at a handful of creatures.
 - Record whether naming without date, duration, importance, effort, or category felt less overwhelming.
 - Record whether letting a creature out felt like enough of a reward.
@@ -176,3 +175,18 @@ Build in this order:
 3. Drag, the window opening, the color shift, and the outdoor view with a way back.
 4. Moss overlays, the `M` key, and `localStorage`.
 5. Swap stand-in shapes for the finished drawings before usability sessions.
+
+## What to ask participants to do in usability studies
+
+Give these tasks in order. Say out loud that dated work and detailed info stay in their Google Calendar.
+
+1. Add three long-term or easy-to-postpone tasks by name only (not homework, not dated work).
+2. Find a place to start. If they stall, invite them to try the Random select button.
+3. Let one creature out through the window.
+4. Look outside and find the freed creature, then return to the wall.
+5. Leave the other creatures on the wall. Facilitator presses `M` on one so moss appears. Ask how that looks and feels.
+6. Let the mossy creature out. Note whether moss clearing on the way out reads as relief, guilt, or nothing much.
+7. Ask whether the wall felt calm or empty with a handful of creatures.
+8. Ask whether naming without date, duration, importance, effort, or category felt less overwhelming.
+9. Ask whether letting a creature out felt like enough of a reward to help them start.
+10. Ask whether moss felt like a nudge, like guilt, or like stress. If stress, note whether they would turn something like that off.

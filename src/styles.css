@@ -1,4 +1,7 @@
-:root { --name-font: system-ui, sans-serif; }
+:root {
+  --name-font: system-ui, sans-serif;
+  --title-font: Georgia, "Palatino Linotype", Palatino, serif;
+}
 
 * { box-sizing: border-box; }
 
@@ -21,48 +24,332 @@ body { background: #000; display: grid; place-items: center; overflow: hidden; }
 .window-hit {
   position: absolute; left: 38.5%; top: 33%; width: 18%; height: 24%;
   background: none; border: 0; cursor: pointer;
+  z-index: 4;
+}
+.window-label {
+  position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
+  color: #f2ebe3;
+  font: 600 0.9rem/1.2 var(--name-font);
+  text-shadow: 0 1px 4px #000c;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-/* Positions. TODO(wander): animate the non-sill slots. */
+/* Positions. Non-sill creatures wander slowly via .taskie-wander. */
 .slot { position: absolute; width: 11%; transform: translate(-50%, -100%); }
 .slot-sill { left: 47.5%; top: 58%; }
-.slot-0 { left: 18%; top: 78%; }
-.slot-1 { left: 30%; top: 90%; }
-.slot-2 { left: 68%; top: 80%; }
-.slot-3 { left: 80%; top: 92%; }
+/* Keep resting spots below the name field / buttons. */
+.slot-0 { left: 16%; top: 90%; }
+.slot-1 { left: 28%; top: 95%; }
+.slot-2 { left: 72%; top: 90%; }
+.slot-3 { left: 84%; top: 95%; }
+.slot-4 { left: 10%; top: 93%; }
+.slot-5 { left: 36%; top: 92%; }
+.slot-6 { left: 64%; top: 95%; }
+.slot-7 { left: 90%; top: 92%; }
 .slot-out-0 { left: 20%; top: 80%; }
 .slot-out-1 { left: 40%; top: 90%; }
 .slot-out-2 { left: 60%; top: 82%; }
 .slot-out-3 { left: 80%; top: 92%; }
 
-.taskie-body { position: relative; cursor: grab; }
-.taskie-img { width: 100%; display: block; user-select: none; }
+.taskie-wander:not(.on-sill) {
+  animation: wander 13s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.slot-0 .taskie-wander { animation-duration: 15s; animation-delay: -3s; }
+.slot-1 .taskie-wander { animation-duration: 12s; animation-delay: -7s; }
+.slot-2 .taskie-wander { animation-duration: 14s; animation-delay: -1s; }
+.slot-3 .taskie-wander { animation-duration: 16s; animation-delay: -5s; }
+.slot-4 .taskie-wander { animation-duration: 13s; animation-delay: -4s; }
+.slot-5 .taskie-wander { animation-duration: 17s; animation-delay: -2s; }
+.slot-6 .taskie-wander { animation-duration: 14s; animation-delay: -6s; }
+.slot-7 .taskie-wander { animation-duration: 15s; animation-delay: -8s; }
+
+.taskie-wander.dragging,
+.taskie-wander.exiting,
+.taskie-wander.dropping {
+  animation-play-state: paused;
+  z-index: 5;
+}
+
+/* Lift the whole slot so a dragged taskie paints over every other taskie. */
+.slot:has(.dragging),
+.slot:has(.exiting),
+.slot:has(.dropping) {
+  z-index: 20;
+}
+
+/* Random-select glow: follows the PNG silhouette, pulses so it reads clearly. */
+.taskie-wander.spotlight .taskie-img {
+  animation: spotlight-pulse 0.9s ease-in-out infinite;
+}
+.taskie-wander.spotlight .taskie-name {
+  color: #fffef6;
+  text-shadow: 0 0 6px #ffe9a8, 0 1px 3px #000;
+}
+
+.complete-popup {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  z-index: 7;
+  width: max-content;
+  max-width: 11rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #2a221bf2;
+  border: 1px solid #ffe08a88;
+  color: #fff6dc;
+  font: 600 0.78rem/1.25 var(--name-font);
+  text-align: center;
+  box-shadow: 0 0 12px #ffd97866;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: complete-popup-in 0.25s ease-out;
+}
+@keyframes complete-popup-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.taskie-wander.newborn .taskie-img {
+  filter: drop-shadow(0 0 1.5px #ffeac288) drop-shadow(0 0 6px #ffd97866);
+  transition: filter 0.45s ease;
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% {
+    filter:
+      brightness(1.15)
+      drop-shadow(0 0 2px #fff)
+      drop-shadow(0 0 10px #ffe08a)
+      drop-shadow(0 0 18px #ffd978cc);
+  }
+  50% {
+    filter:
+      brightness(1.35)
+      drop-shadow(0 0 3px #fff)
+      drop-shadow(0 0 16px #ffe9a8)
+      drop-shadow(0 0 28px #ffd978);
+  }
+}
+
+@keyframes wander {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(6%, -3%); }
+  50%  { transform: translate(-5%, 2%); }
+  75%  { transform: translate(4%, 3%); }
+  100% { transform: translate(-3%, -2%); }
+}
+
+.taskie-body {
+  position: relative;
+  /* Hit area is only the circle sprite + name, not this wrapper box. */
+  pointer-events: none;
+  touch-action: none;
+}
+.taskie-img {
+  width: 100%;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
+}
+.taskie-img:active,
+.taskie-name:active { cursor: grabbing; }
 .color-2 { filter: hue-rotate(120deg); } /* stand-in third color */
 
 .taskie-name {
-  position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%);
-  max-width: 120%; text-align: center; white-space: nowrap;
-  color: #fff; font: 600 1rem var(--name-font); text-shadow: 0 1px 3px #000;
-  pointer-events: none;
+  position: absolute; left: 50%; top: 88%; transform: translateX(-50%);
+  z-index: 2;
+  width: max-content; max-width: 9rem;
+  padding: 0.1rem 0.25rem;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  color: #fff; font: 600 0.85rem/1.15 var(--name-font); text-shadow: 0 1px 3px #000;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
 }
 
-/* Stand-in moss. TODO: replace with drawings. */
-.moss { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; }
+.return-hint {
+  position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%);
+  z-index: 6;
+  width: max-content; max-width: 12rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #5a4a3a;
+  background: #2a221b;
+  color: #f2ebe3;
+  font: 600 0.75rem/1.2 var(--name-font);
+  box-shadow: 0 2px 8px #0006;
+  cursor: pointer;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.return-hint:hover {
+  background: #3a2f26;
+}
+.return-hint:active {
+  background: #1a1612;
+}
+
+/* Stand-in moss. TODO: replace with drawings. Name stays above (z-index). */
+.moss { position: absolute; inset: 0; z-index: 1; border-radius: 50%; pointer-events: none; }
 .moss-1 { background: radial-gradient(circle at 30% 30%, #5a7d3a 0 4%, transparent 5%); }
 .moss-2 { background: radial-gradient(circle at 35% 35%, #5a7d3a 0 15%, transparent 16%), radial-gradient(circle at 70% 60%, #5a7d3a 0 12%, transparent 13%); }
-.moss-3 { background: #5a7d3a99; }
+/* Leave the lower band clear so the name stays readable under a thick coat. */
+.moss-3 {
+  background: #5a7d3a99;
+  bottom: 22%;
+  border-radius: 50% 50% 40% 40%;
+}
 
+.wall-hints {
+  position: absolute; left: 50%; top: 3%; transform: translateX(-50%);
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+}
+.wall-hint {
+  margin: 0;
+  white-space: nowrap;
+  color: #f2ebe3;
+  font: 500 0.9rem/1.35 var(--name-font);
+  text-shadow: 0 1px 4px #000c;
+}
+.wall-hint-sub {
+  margin: 0.2rem 0 0;
+  white-space: nowrap;
+  color: #d9d0c4;
+  font: 400 0.72rem/1.3 var(--name-font);
+  text-shadow: 0 1px 3px #000c;
+}
+
+/* 47.5% matches the window center (window hit: left 38.5% + half of 18%). */
 .add {
-  position: absolute; left: 50%; top: 61%; transform: translateX(-50%);
+  position: absolute; left: 47.5%; top: 66%; transform: translateX(-50%);
+  z-index: 30;
+}
+.add-label {
+  position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%);
+  width: max-content; max-width: 16rem;
+  text-align: center;
+  color: #f2ebe3;
+  font: 500 0.78rem/1.35 var(--name-font);
+  text-shadow: 0 1px 3px #000c;
+}
+.add-row {
+  position: relative;
+  width: 12rem;
+}
+.add textarea {
+  display: block; width: 100%; min-height: 2rem; padding: 4px 8px; border-radius: 6px;
+  border: 1px solid #5a4a3a; background: #1a1612; color: #eee;
+  font: 400 0.9rem/1.3 var(--name-font);
+  resize: none; overflow: hidden;
+  field-sizing: content;
+}
+.add-actions {
+  position: absolute; left: calc(100% + 6px); top: 0;
   display: flex; gap: 6px;
 }
-.add input {
-  width: 9rem; padding: 4px 8px; border-radius: 6px;
-  border: 1px solid #5a4a3a; background: #1a1612; color: #eee;
-}
+.add textarea::placeholder { color: #8a7d70; }
 .add button {
   width: 2rem; border-radius: 6px; border: 1px solid #5a4a3a;
   background: #2a221b; color: #eee; font-size: 1.2rem; cursor: pointer;
+}
+.add button:disabled,
+.pick-random:disabled {
+  opacity: 0.35;
+  color: #7a7268;
+  background: #1a1612;
+  border-color: #3a322a;
+  cursor: not-allowed;
+}
+.pick-random {
+  position: absolute; left: 2%; bottom: 3%;
+  z-index: 30;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #5a4a3a;
+  background: #2a221b;
+  color: #f2ebe3;
+  font: 600 0.8rem/1.2 var(--name-font);
+  cursor: pointer;
+}
+.pick-random:hover:not(:disabled) {
+  background: #3a2f26;
+}
+
+.welcome {
+  position: relative;
+}
+/* Same horizontal center as the window (47.5%); vertically over the glass. */
+.welcome-panel {
+  position: absolute;
+  left: 47.5%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  max-width: 22rem;
+  padding: 1.6rem 1.5rem 1.4rem;
+  text-align: center;
+  background: #120e0acc;
+  border: 1px solid #5a4a3a66;
+  border-radius: 10px;
+}
+.welcome-title {
+  margin: 0 0 0.7rem;
+  color: #f4eee6;
+  font: 700 2.6rem/1.1 var(--title-font);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px #000a;
+}
+.welcome-copy {
+  margin: 0 0 1.2rem;
+  color: #d9d0c4;
+  font: 400 0.95rem/1.45 var(--name-font);
+}
+.welcome-begin {
+  padding: 0.45rem 1.4rem;
+  border-radius: 6px;
+  border: 1px solid #5a4a3a;
+  background: #2a221b;
+  color: #f2ebe3;
+  font: 600 0.95rem var(--name-font);
+  cursor: pointer;
+}
+.welcome-begin:hover {
+  background: #3a2f26;
+}
+
+.outdoor-hints {
+  position: absolute; left: 50%; top: 3%; transform: translateX(-50%);
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+}
+.outdoor-hint {
+  margin: 0;
+  white-space: nowrap;
+  color: #1a2a1a;
+  font: 600 1rem/1.35 var(--name-font);
+  text-shadow: 0 1px 2px #fff8;
+}
+.outdoor-hint-sub {
+  margin: 0.2rem 0 0;
+  white-space: nowrap;
+  color: #2a3a2a;
+  font: 400 0.72rem/1.3 var(--name-font);
+  text-shadow: 0 1px 2px #fff8;
 }
 
 .latch {
